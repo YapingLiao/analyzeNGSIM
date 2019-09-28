@@ -1,0 +1,89 @@
+function processData2()
+    counter = 0;
+    xlsFileName = 'US101-part1.xlsx'
+    [datAll,txt,raw]= xlsread(xlsFileName);
+    vehicleIDAll = datAll(:,1);
+    frameIdAll = datAll(:,2);
+    laneIDAll = datAll(:,14);
+    localXAll = datAll(:,5)*0.3048;
+    localYAll = datAll(:,6)*0.3048;
+    for i=1:180
+        i
+        str = sprintf('.\\LCSamples\\OneLC%d.xlsx',i);
+        [dat,txt,raw]= xlsread(str);
+        vehicleID = dat(:,1);
+        frameId = dat(:,2);
+        localX = dat(:,5)*0.3048;
+        localY = dat(:,6)*0.3048;
+        vehicleLen = dat(:,9)*0.3048;
+        vehicleWid = dat(:,10)*0.3048;
+        vehicleTyp = dat(:,11);
+        vehicleVel = dat(:,12)*0.3048;
+        vehicleAcc = dat(:,13)*0.3048;
+        laneID = dat(:,14);
+        preVeh = dat(:,15);
+        folVeh = dat(:,16);
+        spaceDis = dat(:,17)*0.3048;
+        headWay = dat(:,18);
+        mLCFlag = dat(:,19);
+        ind = find(mLCFlag == 1);
+        ind2=find(abs(diff(laneID))>0);
+        destLane = laneID(end);
+        orlane = laneID(1);
+        adjLaneFolvehLC = folVeh(ind2+1);
+        adjLaneFronVehLC = preVeh(ind2+1);
+     
+        oriLaneFolVehLC = folVeh(ind2);
+        oriLaneFrontVehLC = preVeh(ind2);
+        
+        [traj,indTraj]= getTrajsLC(adjLaneFolvehLC ,destLane,frameId,ind2,datAll);
+        trajs{1} = traj;
+        [traj,indTraj]= getTrajsLC( adjLaneFronVehLC ,destLane,frameId,ind2,datAll);
+        trajs{2} = traj;
+        [traj,indTraj]= getTrajsLC(oriLaneFolVehLC,oriLane,frameId,ind2,datAll);
+        trajs{3} = traj;
+        [traj,indTraj]= getTrajsLC( oriLaneFrontVehLC ,oriLane,frameId,ind2,datAll);  
+        trajs{4} = traj;
+          
+        trajs{5} = [localX,localY];
+        showTrajs(trajs)
+
+        
+        
+    end
+end
+
+function [traj,indTraj]= getTrajsLC(vehID,destLane,frameId,lcIND,datAll)
+           
+        if vehID<=0
+            trajs = [];
+            indTraj =[];
+        end
+        vehicleIDAll = datAll(:,1);
+        frameIdAll = datAll(:,2);
+        laneIDAll = datAll(:,14);
+        localXAll = datAll(:,5)*0.3048;
+        localYAll = datAll(:,6)*0.3048;
+    
+        tmpInd1 =  laneIDAll == destLane;
+        tmpInd2 =  frameIdAll>frameId(1) & frameIdAll<frameId(lcIND);
+        tmpInd3 = strcmp(vehicleIDAll,vehID);
+        indTraj = tmpInd1&tmpInd2&tmpInd3;
+        localYTmp =  localYAll( tmpInd1&tmpInd2&tmpInd3 );
+        localXTmp =  localXAll( tmpInd1&tmpInd2&tmpInd3 );
+        traj =[localXTmp localYTmp];
+
+end
+
+function showTrajs(trajs)
+figure(101)
+
+for i =1:5
+    if isempty(trajs{i}) ==0
+        [X,Y] =trajs{i};
+         subplot(5,1,i)
+         plot(X,Y,'r')
+    end
+    
+end
+end
