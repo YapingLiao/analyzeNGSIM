@@ -1,9 +1,12 @@
-function findOneLCAndShow1()
+function findOneLCAndShow1(name)
 %只找变道一次的，而且变道后持续4秒以上
-    counter = 0;
-    for i=1:590
-        i
-        str = sprintf('.\\LCSamples\\LC%d.csv',i);
+%T = dir('E:\oneDriveData\OneDrive\GITHUB\analyzeNGSIM\LCSamples\*.csv');
+T = dir(name);
+counter =0;
+    for i=1:length(T)
+    
+        str=[T(i).folder '\' T(i).name];
+        disp(str)
         dat= csvread(str);
 %         vehicleID = dat(:,1);
 %         frameId = dat(:,2);
@@ -26,7 +29,7 @@ function findOneLCAndShow1()
             lane2 = laneID(indT+1);
             indT1 = find(laneID==lane1);
             indT2 = find(laneID==lane2);
-            if length(indT1)>40 && length(indT2)>40%变道前后变道后持续4秒以上
+            if length(indT1)>30 && length(indT2)>30%变道前后变道后持续3秒以上
               
                  indTT1 = max(indT1(1),indT-100);
                  indTT2 = min(indT+120,indT2(end));
@@ -55,7 +58,12 @@ function findOneLCAndShow1()
                 xlim([0 30])
                 title(i)
                 pause(1);
+            else
+                   disp('变道时间不够')
             end
+        else
+            str = ['变道多次:' num2str(length(indT))];
+            disp(str)
         end
     end
 end
@@ -130,9 +138,10 @@ function [mylcInd1,mylcInd2] = laneChangeStartPoint(dat)
              
             
         end
-        
-            if abs(localX(mylcInd2)-localX(mylcInd1))<3%转换距离不够，暂时不处理变道过程有长时间等待情况
-
+           lcdist = abs(localX(mylcInd2)-localX(mylcInd1));
+            if lcdist<2%转换距离不够，暂时不处理变道过程有长时间等待情况
+            str = ['变道距离不够:' num2str(lcdist )];
+            disp(str)
              mylcInd1 =0;
              mylcInd2 =0;
             end

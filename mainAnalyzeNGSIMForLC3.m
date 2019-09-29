@@ -12,9 +12,15 @@ function ex1()
 csvDataIsOk = 1;
 if csvDataIsOk ==0
 dataFile = 'trajectories-0750am-0805am.txt';
+dataFile = 'trajectories-0805am-0820am.txt';
+dataFile = 'trajectories-0820am-0835am.txt';
+
 extractLaneChangeDataIntoCSV(dataFile);%把所有存在车道转换的路径给出
 end
- findOneLCAndShow1();%只找变道一次的，而且变道后持续4秒以上
+ name = '.\\LCSamples\\LC*.csv';
+ findOneLCAndShow1(name);%只找变道一次的，而且变道后持续4秒以上
+ %神经网络：https://blog.csdn.net/weixin_43575157/article/details/83617949
+ trainLSTM();
 end
 
 
