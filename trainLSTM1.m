@@ -50,7 +50,7 @@ options = trainingOptions('adam', ...
     'ValidationFrequency',5,'ExecutionEnvironment','cpu')
 
 net = trainNetwork(XTrain1,YTrain1,layers,options);
-save NGSIMnet.mat;
+save ngsimOneLCTwoType.mat;
 showRvl();
 end
 
@@ -60,10 +60,10 @@ function [XTrain,YTrain]=prepareData()
 XTrain={};
 YTrain ={};
 counter = 0;
-name{1} = '.\US101-LC-0750am-0805am\oneLC*.csv';
-name{2} = '.\US101-LC-0805am-0820am\oneLC*.csv';
-name{3} = '.\US101-LC-0820am-0835am\oneLC*.csv';
-for k=1:3
+name{1} = '.\LCSamples\oneLC*.csv';
+% name{2} = '.\US101-LC-0805am-0820am\oneLC*.csv';
+% name{3} = '.\US101-LC-0820am-0835am\oneLC*.csv';
+for k=1:1
     nameT = name{k};
     T = dir(nameT);
     for i=1:length(T)
@@ -98,12 +98,11 @@ end
 %%
 %%从文件夹中读入准备好的比较好的一次车道转换的数据
 function showRvl()
-load NGSIMnet.mat 
+load ngsimOneLCTwoType.mat
 XTest = XTrain1{10};
 YTest = YTrain1{10};
-XTest = XValidation1{20};
-YTest = YValidation1{20};
-
+XTest = XValidation1{40};
+YTest = YValidation1{40};
 
 YPred = classify(net,XTest);
 acc = sum(YPred == YTest)./numel(YTest)

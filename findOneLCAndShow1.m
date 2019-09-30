@@ -57,7 +57,7 @@ counter =0;
                 plot(localX(mylcInd1:mylcInd2),localY(mylcInd1:mylcInd2),'b.-');
                 xlim([0 30])
                 title(i)
-                pause(1);
+%                 pause(1);
             else
                    disp('变道时间不够')
             end
