@@ -1,14 +1,14 @@
 # analyzing NGSIM
-æ­¥éª¤åŸºäºŽmainAnalyzeNGSIMForLC3æ–‡ä»¶    
-1.ç›´æŽ¥è¯»å…¥NGSIMçš„txtæ–‡ä»¶ï¼ˆæ³¨æ„æŠŠRARæ–‡ä»¶è§£åŽ‹ç¼©ä¸ºTXTæ–‡ä»¶ï¼‰ï¼Œç”¨importData ,å¹¶æŠŠæ‰€æœ‰å¯èƒ½çš„å˜é“è·¯å¾„ï¼Œæå–ä¸ºå•ä¸ªCSVæ–‡ä»¶ï¼ŒåŸºäºŽextractLaneChangeDataIntoCSV    
-2.è¯»å…¥å•ä¸ªCSV(ç±»ä¼¼LC1.CSV),åˆ†æžæ˜¯å¦ä¸ºæ­£å¸¸å˜é“ï¼Œæ˜¯æ­£å¸¸å˜é“çš„å°†æ–‡ä»¶å­˜ä¸ºoneLC.csv.æ­£å¸¸å˜é“è§„åˆ™ä¸º  
-A.åªæœ‰ä¸€æ¬¡å˜é“ï¼Œä¸å­˜åœ¨å¤šæ¬¡å˜é“  
-B.å˜é“ç‚¹çš„å‰åŽæ—¶é—´ä¸ä¼šè¶…è¿‡5ç§’ï¼Œä¹Ÿå°±æ˜¯è¯´å˜é“è¿™ä¸ªè¿‡ç¨‹ä¸è¶…è¿‡10ç§’    
-C.å˜é“è·¯å¾„Xè·ç¦»å˜åŒ–å¤§äºŽ3ç±³  
-D.å˜é“è·¯å¾„èµ·å§‹ç‚¹å’Œç»“æŸç‚¹çš„ç²—ç•¥ä¸ºå¹³å‡æ•°åŠ ä¸€ç‚¹ç‚¹æ–¹å·®ï¼Œå…·ä½“è§findOneLCAndShow1ä¸­çš„ä»£ç 
-3.åŸºäºŽLSTMè¯†åˆ«LCè¿˜æ˜¯LKï¼ŒLSTMçš„ç±»åˆ«ä¸ºåºåˆ—åˆ°åºåˆ—ï¼Œæ–‡ä»¶ä¸ºtrainLSTM1  
+²½Öè»ùÓÚmainAnalyzeNGSIMForLC3ÎÄ¼þ    
+1.Ö±½Ó¶ÁÈëNGSIMµÄtxtÎÄ¼þ£¨×¢Òâ°ÑRARÎÄ¼þ½âÑ¹ËõÎªTXTÎÄ¼þ£©£¬ÓÃimportData ,²¢°ÑËùÓÐ¿ÉÄÜµÄ±äµÀÂ·¾¶£¬ÌáÈ¡Îªµ¥¸öCSVÎÄ¼þ£¬»ùÓÚextractLaneChangeDataIntoCSV    
+2.¶ÁÈëµ¥¸öCSV(ÀàËÆLC1.CSV),·ÖÎöÊÇ·ñÎªÕý³£±äµÀ£¬ÊÇÕý³£±äµÀµÄ½«ÎÄ¼þ´æÎªoneLC.csv.Õý³£±äµÀ¹æÔòÎª  
+A.Ö»ÓÐÒ»´Î±äµÀ£¬²»´æÔÚ¶à´Î±äµÀ  
+B.±äµÀµãµÄÇ°ºóÊ±¼ä²»»á³¬¹ý5Ãë£¬Ò²¾ÍÊÇËµ±äµÀÕâ¸ö¹ý³Ì²»³¬¹ý10Ãë    
+C.±äµÀÂ·¾¶X¾àÀë±ä»¯´óÓÚ3Ã×  
+D.±äµÀÂ·¾¶ÆðÊ¼µãºÍ½áÊøµãµÄ´ÖÂÔÎªÆ½¾ùÊý¼ÓÒ»µãµã·½²î£¬¾ßÌå¼ûfindOneLCAndShow1ÖÐµÄ´úÂë
+3.»ùÓÚLSTMÊ¶±ðLC»¹ÊÇLK£¬LSTMµÄÀà±ðÎªÐòÁÐµ½ÐòÁÐ£¬ÎÄ¼þÎªtrainLSTM1  
 #############################################################################  
 
-4.å°†æ‰€æœ‰txtæ•°æ®æ–‡ä»¶ä¸€æ¬¡æ€§è¯»å…¥æ–‡ä»¶ä¸­ï¼Œå¹¶ç”Ÿæˆæ‰€æœ‰LC.csvæ–‡ä»¶  
-5.findOneLCAndShow2,å®žçŽ°äº†LK2LCçš„è¿‡æ¸¡ç±»åˆ«æ ‡è®°å’Œè®­ç»ƒï¼ŒtrainLSTM2  
-6.findTwoLCAndShow2,å®žçŽ°æ‰¾2ä¸ªè½¦é“è½¬æ¢  
+4.½«ËùÓÐtxtÊý¾ÝÎÄ¼þÒ»´ÎÐÔ¶ÁÈëÎÄ¼þÖÐ£¬²¢Éú³ÉËùÓÐLC.csvÎÄ¼þ¡£×¢Òâ½«1µÄ´úÂë½øÐÐÁËÐÞ¸Ä  
+5.findOneLCAndShow2,ÊµÏÖÁËLK2LCµÄ¹ý¶ÉÀà±ð±ê¼ÇºÍÑµÁ·£¬trainLSTM2  
+6.findTwoLCAndShow2,ÊµÏÖÕÒ2¸ö³µµÀ×ª»»  
