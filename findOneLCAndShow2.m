@@ -41,9 +41,23 @@ counter =0;
                %%%车道转换和车道保持之间的过渡带
               TMP = diff(localX)*0.3048;
               indTmp = [mylcInd1-1:-1:mylcInd1-10];
+              indTmp2 =[mylcInd1-1:-1:max(1,mylcInd1-30)];
+              meanTmp = mean(TMP(indTmp2));
               flag = mylcInd1-1;
+              
+              %向右
+             
+              
               for j=indTmp
-                  if sign(TMP(j)) == sign(TMP(indT))
+                  
+                %向右
+                if sign(TMP(indT))>0 %向右
+                    flagTmp = TMP(j)>meanTmp;
+                else %向左
+                    flagTmp = TMP(j)<meanTmp;
+                end
+              
+                  if sign(TMP(j)) == sign(TMP(indT)) && flagTmp==1
                       flag = j;
                       continue;
                   else
@@ -63,18 +77,26 @@ counter =0;
                 csvwrite(str2,tmp); 
                 close all;
                 figure(101)
-                subplot(2,1,1)
+                subplot(3,1,1)
                 hold on
                 plot(localX,localY,'b.-');
                  plot(localX(mylcInd1:mylcInd2),localY(mylcInd1:mylcInd2),'r.-');
+                 plot(localX(mylk2lcInd:mylcInd1-1),localY(mylk2lcInd:mylcInd1-1),'g.-');
                  hold off
                  xlim([0 30])
                 
-                subplot(2,1,2)
+                subplot(3,1,2)
                 plot(localX(mylcInd1:mylcInd2),localY(mylcInd1:mylcInd2),'b.-');
                 xlim([0 30])
+                
+                 subplot(3,1,3)
+                 hold on
+                 plot(localX(mylcInd1:mylcInd2),localY(mylcInd1:mylcInd2),'b.-');
+                plot(localX(mylk2lcInd:mylcInd1-1),localY(mylk2lcInd:mylcInd1-1),'g.-');
+                hold off
+                xlim([0 30])
                 title(i)
-%                 pause(1);
+               %pause(5);
             else
                    disp('变道时间不够')
             end
