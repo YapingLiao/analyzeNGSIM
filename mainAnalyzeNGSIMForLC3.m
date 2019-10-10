@@ -29,10 +29,17 @@ if 0
  findTwoLCAndShow1(name);%只找变道二次的，而且变道后持续4秒以上。%暂时无比较好的方法和思路分析
 end
 
-if 1
+if 0
  name = '.\\LCSamples\\LC*.csv';
  findOneLCAndShow2(name);%只找变道一次的，而且变道后持续4秒以上，而且变道前有过渡带类型
  trainLSTM2();%只训练变道1次的
+end
+
+
+if 1
+ name = '.\\LCSamples\\LC*.csv';
+ findOneLCAndShow3(name);%只找变道一次的，而且变道后持续4秒以上，而且变道前有过渡带类型，变道后也有过渡带
+ trainLSTM3();%只训练变道1次的
 end
  %神经网络：https://blog.csdn.net/weixin_43575157/article/details/83617949
 
