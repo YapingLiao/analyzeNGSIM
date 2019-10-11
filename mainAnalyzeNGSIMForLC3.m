@@ -36,13 +36,18 @@ if 0
 end
 
 
-if 1
+if 0
  name = '.\\LCSamples\\LC*.csv';
  findOneLCAndShow3(name);%只找变道一次的，而且变道后持续4秒以上，而且变道前有过渡带类型，变道后也有过渡带
  trainLSTM3();%只训练变道1次的
 end
  %神经网络：https://blog.csdn.net/weixin_43575157/article/details/83617949
-
+ 
+if 1
+ name = '.\\LCSamples\\LC*.csv';
+ findOneLCAndShow4(name);%只找变道一次的，而且变道后持续4秒以上，而且变道前有过渡带类型，变道后也有过渡带，并且增加与前车距离
+ trainLSTM4();%只训练变道1次的
+end
 end
 
 

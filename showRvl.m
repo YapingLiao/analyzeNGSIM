@@ -7,8 +7,8 @@ close all
 load ngsimOneLC4Type.mat;
 
 
-XTest = XTrain1{2};
-YTest = YTrain1{2};
+XTest = XTrain1{1};
+YTest = YTrain1{1};
 XTest = XValidation1{3};
 YTest = YValidation1{3};
 YPred = classify(net,XTest);
