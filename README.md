@@ -13,6 +13,7 @@ D.╠Д╣юб╥╬╤фПй╪╣Ц╨м╫АйЬ╣Ц╣д╢жбтн╙ф╫╬ЫйЩ╪ср╩╣Ц╣Ц╥╫╡Нё╛╬ълЕ╪ШfindOneLCAndShow1жп╣д╢
 5.findOneLCAndShow2,trainLSTM2 ,й╣ожак3юЮё╛LK2LC╣д╧Щ╤июЮ╠П╠Й╪г╨мя╣а╥  
 6.findTwoLCAndShow2,й╣ожур2╦ЖЁ╣╣юв╙╩╩    
 7.findOneLCAndShow3,trainLSTM3, й╣ожак4юЮ,LK2LC,LC2LK,╣д╧Щ╤июЮ╠П╠Й╪г╨мя╣а╥  
-8.findOneLCAndShow3,trainLSTM3, й╣ожак4юЮ,LK2LC,LC2LK,╣д╧Щ╤июЮ╠П╠Й╪г╨мя╣а╥,╡╒╪схКHEADWAYльуВ║ёфДжпtrainLSTM3й╣ожак╤Ю╡ЦLSTM  
+8.findOneLCAndShow4,trainLSTM4, й╣ожак4юЮ,LK2LC,LC2LK,╣д╧Щ╤июЮ╠П╠Й╪г╨мя╣а╥,╡╒╪схКHEADWAYльуВ║ёфДжпtrainLSTM3й╣ожак╤Ю╡ЦLSTM  
 9.featureTest1.m й╣ожльуВя║тЯкЦ╥╗  
 10.analyzingByHuman1.m сцсзхк╧╓╧ш╡ЛйЩ╬щ  
+11.findOneLCAndShow5,trainLSTM5, тзfindOneLCAndShow4,trainLSTM4, ╣д╩Ы╢║иоё╛в╙╩╩н╙Seq2one╣дLSTMдёпм║ё  
