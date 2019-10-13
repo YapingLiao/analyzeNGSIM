@@ -17,3 +17,10 @@ D.±äµÀÂ·¾¶ÆğÊ¼µãºÍ½áÊøµãµÄ´ÖÂÔÎªÆ½¾ùÊı¼ÓÒ»µãµã·½²î£¬¾ßÌå¼ûfindOneLCAndShow1ÖĞµÄ´
 9.featureTest1.m ÊµÏÖÌØÕ÷Ñ¡ÔñËã·¨  
 10.analyzingByHuman1.m ÓÃÓÚÈË¹¤¹Û²ìÊı¾İ  
 11.findOneLCAndShow5,trainLSTM5, ÔÚfindOneLCAndShow4,trainLSTM4, µÄ»ù´¡ÉÏ£¬×ª»»ÎªSeq2oneµÄLSTMÄ£ĞÍ¡£  
+
+#############################################################################  
+ÓïÒå·Ö¸î
+1.ÈëÃÅ¿´https://blog.csdn.net/qian2213762498/article/details/82788273  
+
+
+
