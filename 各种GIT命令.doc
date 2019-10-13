@@ -1,0 +1,8 @@
+
+3.清理本地版本库
+$ git gc --prune=now
+
+git reset --hard origin/master 
+
+
+git push --force

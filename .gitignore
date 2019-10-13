@@ -3,3 +3,5 @@
 *.txt
 /Ckpts
 *.rar
+*.mat
+*.log
