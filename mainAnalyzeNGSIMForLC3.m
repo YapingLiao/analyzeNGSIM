@@ -49,10 +49,16 @@ if 0
  trainLSTM4();%只训练变道1次的
 end
 
-if 1
+if 0
  name = '.\\LCSamples\\LC*.csv';
  findOneLCAndShow5(name);%只找变道一次的，而且变道后持续4秒以上，而且变道前有过渡带类型，变道后也有过渡带，并且增加与前车距离,用另外一个模型，SEQ->ONE
  trainLSTM5();%只训练变道1次的
+end
+
+if 1
+ name = '.\\LCSamples\\LC*.csv';
+ findOneLCAndShow6(name);%只找变道一次的，而且变道后持续4秒以上，而且变道前有过渡带类型，并且增加与前车距离,用另外一个模型，SEQ->ONE
+ trainLSTM6();%只训练变道1次的
 end
 end
 
