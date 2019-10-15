@@ -1,6 +1,6 @@
-%;%只找变道一次的，而且变道后持续4秒以上，而且变道前有过渡带类型，并且增加与前车HEADWAY;用另外一个模型，SEQ->SEQ，只做3类，提高正确率。注意，车道转换结束点为
+%;%只找变道一次的，而且变道后持续4秒以上，而且变道前有过渡带类型，并且增加与前车HEADWAY;用另外一个模型，SEQ->Seq，只做3类，提高正确率。注意，车道转换结束点为
 %mean1加减0.1*std1，提前了
-function findOneLCAndShow6(name)
+function findOneLCAndShow7(name)
 %只找变道一次的，而且变道后持续4秒以上
 %T = dir('E:\oneDriveData\OneDrive\GITHUB\analyzeNGSIM\LCSamples\*.csv');
 T = dir(name);
