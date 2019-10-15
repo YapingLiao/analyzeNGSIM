@@ -3,7 +3,7 @@
 function  trainLSTM6()
 
 [XTrain,YTrain]=prepareData();
-num1 = floor(length(XTrain)/10*5);
+num1 = floor(length(XTrain)/10*1);
 num2 = randperm(length(XTrain));
 trainList = num2(1:num1);
 validList = num2(num1+1:end);
@@ -51,7 +51,7 @@ layers = [ ...
 %     'ValidationFrequency',5,'ExecutionEnvironment','cpu','MaxEpochs',300)
 
 options = trainingOptions('adam', ...
-    'MaxEpochs',100, ...
+    'MaxEpochs',50, ...
     'GradientThreshold',0.05, ...
     'Verbose',0, ...
     'Plots','training-progress',...
@@ -111,12 +111,12 @@ for k=1:1
         %%获取3s的数据
         timeDur = numel(localX);
         
-         for j=20:timeDur
+         for j=10:timeDur-10
             counter= counter+1;
         
             label = dat(j,19);
             YTrainT(counter) =label;
-            XTrainT{counter} = [localX1(j-19:j)  Xvel1(j-19:j)  vehicleAcc(j-19:j)  headWay(j-19:j) ]';  
+            XTrainT{counter} = [localX1(j-9:j+9)  Xvel1(j-9:j+9)  vehicleAcc(j-9:j+9)  headWay(j-9:j+9) ]';  
          end
     end
 end
