@@ -1,4 +1,4 @@
-function findOneLCAndShow2(name)
+function findTwoLCAndShow1(name)
 %只找变道2次的，而且变道后持续4秒以上
 %暂时无比较好的方法和思路分析
 %T = dir('E:\oneDriveData\OneDrive\GITHUB\analyzeNGSIM\LCSamples\*.csv');
