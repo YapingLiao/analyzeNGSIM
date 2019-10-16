@@ -1,5 +1,5 @@
-%;%只找变道一次的，而且变道后持续4秒以上，而且变道前有过渡带类型，并且增加与前车HEADWAY;用另外一个模型，SEQ->Seq，只做3类，提高正确率。注意，车道转换结束点为
-%mean1加减0.1*std1，提前了
+%;%只找变道一次的，而且变道后持续4秒以上，而且变道前有过渡带类型，并且增加与前车HEADWAY;用另外一个模型，SEQ->Seq，只做4类，提高正确率。注意，车道转换结束点为
+%mean1加减0.1*std1，提前了,以及第4类为异常类，例如HEADWAY跳变点，而不是lc2lk的变换点
 function findOneLCAndShow7(name)
 %只找变道一次的，而且变道后持续4秒以上
 %T = dir('E:\oneDriveData\OneDrive\GITHUB\analyzeNGSIM\LCSamples\*.csv');
@@ -40,7 +40,7 @@ counter =0;
               
                  indTT1 = max(indT1(1),indT-100);
                  indTT2 = min(indT+120,indT2(end));
-                [mylcInd1 mylcInd2] = laneChangeStartPoint(dat);%粗略找到变道开始和结束点
+                [mylcInd1,mylcInd2] = laneChangeStartPoint(dat);%粗略找到变道开始和结束点
                if(mylcInd1==0 )
                    continue;
                end
@@ -123,33 +123,39 @@ counter =0;
                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                %%%生成数据，添加标记
                 counter = counter+1;
-                str2 = sprintf('.\\LCSamples\\OneLC3Type%d.csv',counter);
-                mylcFlag = zeros(size(laneID));
+                str2 = sprintf('.\\LCSamples\\OneLC4Type%d.csv',counter);
+                mylcFlag = zeros(numel(laneID),1);
                 mylcFlag(mylcInd1:mylcInd2)=1;
-                
-                mylcFlag(mylk2lcInd:mylcInd1-1)=2;%从lk2lc过渡带
+                 mylcFlag(mylk2lcInd:mylcInd1)=2;
+                 mylcFlag(indT+1)=3;%车道变换点，headway跳变
+                 
+             
+             
+                mylcFlag(indT+1) =3;%车道变换时HEAWAY出现跳变，出现异常，归类为3
+             
 
                 dat1 = [dat mylcFlag];
                 tmp = dat1(indTT1:indTT2,:);
                 csvwrite(str2,tmp); 
                 allData = [allData;dat1];
                 
-                
+                close all
                 figure(101)
-                subplot(2,1,1)
+                subplot(3,1,1)
                 hold on
                 plot(localX,localY,'b.-');
                  plot(localX(mylcInd1:mylcInd2),localY(mylcInd1:mylcInd2),'r.-');
                  plot(localX(mylk2lcInd:mylcInd1-1),localY(mylk2lcInd:mylcInd1-1),'g.-');
                  hold off
                  xlim([0 30])
-                
-                subplot(2,1,2)
+                title(i)
+                subplot(3,1,2)
                 plot(localX(mylcInd1:mylcInd2),localY(mylcInd1:mylcInd2),'b.-');
                 xlim([0 30])
+                  subplot(3,1,3)
+                   plot(frameId(mylcInd1:mylcInd2),headWay(mylcInd1:mylcInd2),'b.-');
                 
                 
-                title(i)
                 
 %                 analyzingByHuman1(dat,mylk2lcInd,mylcInd1,mylcInd2,mylc2lkInd)
                 
@@ -162,7 +168,7 @@ counter =0;
             disp(str)
         end
     end
-    str2 ='.\\LCSamples\\OneLC3TypeAllData.csv';
+    str2 ='.\\LCSamples\\OneLC4TypeAllData.csv';
     csvwrite(str2,allData); 
 end
 
@@ -187,14 +193,14 @@ function [mylcInd1,mylcInd2] = laneChangeStartPoint(dat)
         lane1 = laneID(indT);
         lane2 = laneID(indT+1);
         indT1 = find(laneID==lane1);
-        indT2 = find(laneID==lane2);
+        
         
         lcXpoint1 = localX(indT);
         mean1= mean(localX(indT1));
-        mean2= mean(localX(indT2));
+      
     
         
-        if lcXpoint1>mean1
+        if lcXpoint1>mean1%向右转
               tmp1 = max(1,indT-100):indT;
              mean1= mean(localX( tmp1));
              std1 = std(localX( tmp1));

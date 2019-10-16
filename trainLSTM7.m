@@ -1,18 +1,19 @@
-%只找变道一次的，而且变道后持续4秒以上，而且变道前有过渡带类型，3类，HEADWAY，用 bilstmLayer，seq2seq
+%;%只找变道一次的，而且变道后持续4秒以上，而且变道前有过渡带类型，并且增加与前车HEADWAY;用另外一个模型，SEQ->Seq，只做4类，提高正确率。注意，车道转换结束点为
+%mean1加减0.1*std1，提前了,以及第4类为异常类，例如HEADWAY跳变点，而不是lc2lk的变换点
 function  trainLSTM7()
 
 [XTrain,YTrain]=prepareData();
-num1 = floor(length(XTrain)/10*1);
+num1 = floor(length(XTrain)/10*5);
 num2 = randperm(length(XTrain));
 trainList = num2(1:num1);
-validList = num2(num1+1:end);
+validList = num2(num1+1:num1+2);
 XTrain1= XTrain(trainList);
 YTrain1 = YTrain(trainList);
 XValidation1= XTrain(validList);
 YValidation1 = YTrain(validList);
 numFeatures = 4;
-numHiddenUnits = 100;
-numClasses = 3;
+numHiddenUnits = 200;
+numClasses = 4;
 %参考：https://ww2.mathworks.cn/help/deeplearning/examples/sequence-to-sequence-classification-using-deep-learning.html
 
 % layers = [ ...
@@ -30,14 +31,18 @@ layers = [ ...
     fullyConnectedLayer(numClasses)
     softmaxLayer
     classificationLayer];
-% 
-% numHiddenUnits2 = 100;
-%  numHiddenUnits3 = 10;
-% % numHiddenUnits4 = 25;
+
+% numHiddenUnits2 = 200;
+% numHiddenUnits3 = 50;
+% numHiddenUnits4 = 25;
 % layers = [ ...
 %     sequenceInputLayer(numFeatures)
-%     bilstmLayer(numHiddenUnits2,'OutputMode','sequence')
-%     dropoutLayer(0.5)
+%     lstmLayer(numHiddenUnits2,'OutputMode','sequence')
+%     dropoutLayer(0.2)
+%     lstmLayer(numHiddenUnits3,'OutputMode','sequence')
+%     dropoutLayer(0.2)
+%     lstmLayer(numHiddenUnits4,'OutputMode','sequence')
+%     dropoutLayer(0.2)
 %     fullyConnectedLayer(numClasses)
 %     softmaxLayer
 %     classificationLayer];
@@ -52,16 +57,30 @@ layers = [ ...
 %     'ValidationData',{XValidation1,YValidation1}, ...
 %     'ValidationFrequency',5,'ExecutionEnvironment','cpu','MaxEpochs',300)
 
+% options = trainingOptions('adam', ...
+%     'MaxEpochs',200, ...
+%     'GradientThreshold',0.05, ...
+%     'Verbose',0, ...
+%     'Plots','training-progress',...
+%     'MiniBatchSize',64, ...
+%     'ValidationData',{XValidation1,YValidation1}, ...
+%     'ValidationFrequency',5,'ExecutionEnvironment','cpu',...
+%     'CheckpointPath','.\CkPts',...
+%  'Shuffle','every-epoch' ,'L2Regularization',0.01, 'ValidationPatience',500)
+% 
+% options = trainingOptions('adam', ...
+%     'MaxEpochs',60, ...
+%     'GradientThreshold',2, ...
+%     'Verbose',0, ...
+%     'Plots','training-progress');%good
+
 options = trainingOptions('adam', ...
-    'MaxEpochs',100, ...
-    'GradientThreshold',0.05, ...
-    'Verbose',0, ...
-    'Plots','training-progress',...
-    'MiniBatchSize',64, ...
+    'MaxEpochs',300, ...
+    'GradientThreshold',0.2, ...
     'ValidationData',{XValidation1,YValidation1}, ...
     'ValidationFrequency',5,'ExecutionEnvironment','cpu',...
-    'CheckpointPath','.\CkPts',...
- 'Shuffle','every-epoch' ,'L2Regularization',0.01, 'ValidationPatience',50)
+    'Verbose',0, ...
+    'Plots','training-progress');%good
 
 % options = trainingOptions('adam', ...
 %     'MaxEpochs',250, ...
@@ -73,17 +92,17 @@ options = trainingOptions('adam', ...
 %     'Verbose',0, ...
 %     'Plots','training-progress');
 net = trainNetwork(XTrain1,YTrain1,layers,options);
-save ngsimOneLC3Type_seq2seq.mat;
+save ngsimOneLC4Type.mat;
 % showRvl();
 end
 
 %%
 %%从文件夹中读入准备好的比较好的一次车道转换的数据
 function [XTrain,YTrain]=prepareData()
-XTrain={};
-YTrain ={};
+XTrainT={};
+YTrainT ={};
 counter = 0;
-name{1} = '.\LCSamples\oneLC3Type*.csv';
+name{1} = '.\LCSamples\oneLC4Type*.csv';
 
 for k=1:1
     nameT = name{k};
@@ -112,13 +131,24 @@ for k=1:1
         Xvel1=(Xvel-meanXvel);
         
         counter= counter+1;
-        
+%         https://www.mathworks.com/help/releases/R2019b/deeplearning/examples/sequence-to-sequence-classification-using-deep-learning.html
          label = dat(:,19);
-         YTrain{counter} = categorical(label');
-         XTrain{counter} = [localX1 Xvel1 vehicleAcc headWay ]';  
+         labelT=strings(numel(label),1)
+         ind = label==0;
+         labelT(ind,:)='lk';
+          ind = label==1;
+         labelT(ind,:)='lc';
+          ind = label==2;
+         labelT(ind,:)='lk2lc';
+          ind = label==3;
+         labelT(ind,:)='abnorm';
+         
+         YTrainT{counter,1} = categorical(labelT');
+         XTrainT{counter,1} = [localX1 Xvel1 vehicleAcc headWay ]';  
     end
 end
-
+YTrain = YTrainT;
+XTrain = XTrainT;
 end
 
 
