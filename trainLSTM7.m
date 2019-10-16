@@ -2,7 +2,7 @@
 function  trainLSTM7()
 
 [XTrain,YTrain]=prepareData();
-num1 = floor(length(XTrain)/10*5);
+num1 = floor(length(XTrain)/10*1);
 num2 = randperm(length(XTrain));
 trainList = num2(1:num1);
 validList = num2(num1+1:end);
@@ -11,8 +11,8 @@ YTrain1 = YTrain(trainList);
 XValidation1= XTrain(validList);
 YValidation1 = YTrain(validList);
 numFeatures = 4;
-numHiddenUnits = 600;
-numClasses = 4;
+numHiddenUnits = 100;
+numClasses = 3;
 %²Î¿¼£ºhttps://ww2.mathworks.cn/help/deeplearning/examples/sequence-to-sequence-classification-using-deep-learning.html
 
 % layers = [ ...
@@ -31,17 +31,13 @@ layers = [ ...
     softmaxLayer
     classificationLayer];
 % 
-% numHiddenUnits2 = 200;
-% numHiddenUnits3 = 50;
-% numHiddenUnits4 = 25;
+% numHiddenUnits2 = 100;
+%  numHiddenUnits3 = 10;
+% % numHiddenUnits4 = 25;
 % layers = [ ...
 %     sequenceInputLayer(numFeatures)
-%     lstmLayer(numHiddenUnits2,'OutputMode','sequence')
-%     dropoutLayer(0.2)
-%     lstmLayer(numHiddenUnits3,'OutputMode','sequence')
-%     dropoutLayer(0.2)
-%     lstmLayer(numHiddenUnits4,'OutputMode','sequence')
-%     dropoutLayer(0.2)
+%     bilstmLayer(numHiddenUnits2,'OutputMode','sequence')
+%     dropoutLayer(0.5)
 %     fullyConnectedLayer(numClasses)
 %     softmaxLayer
 %     classificationLayer];
@@ -57,7 +53,7 @@ layers = [ ...
 %     'ValidationFrequency',5,'ExecutionEnvironment','cpu','MaxEpochs',300)
 
 options = trainingOptions('adam', ...
-    'MaxEpochs',200, ...
+    'MaxEpochs',100, ...
     'GradientThreshold',0.05, ...
     'Verbose',0, ...
     'Plots','training-progress',...
@@ -87,7 +83,7 @@ function [XTrain,YTrain]=prepareData()
 XTrain={};
 YTrain ={};
 counter = 0;
-name{1} = '.\LCSamples\oneLC4Type*.csv';
+name{1} = '.\LCSamples\oneLC3Type*.csv';
 
 for k=1:1
     nameT = name{k};
