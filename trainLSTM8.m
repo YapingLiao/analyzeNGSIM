@@ -4,15 +4,16 @@ function  trainLSTM8()
 
 [XTrain,YTrain]=prepareData();
 num1 = floor(length(XTrain)/10*5);
-num2 = randperm(length(XTrain));
+num2 = randperm(length(XTrain));%不用RAND
+num2 = 1:length(XTrain);
 trainList = num2(1:num1);
-validList = num2(num1+1:num1+3);
+validList = num2(num1+1:end);
 XTrain1= XTrain(trainList);
 YTrain1 = YTrain(trainList);
 XValidation1= XTrain(validList);
 YValidation1 = YTrain(validList);
 numFeatures = 4;
-numHiddenUnits = 200;
+numHiddenUnits = 50;
 numClasses = 4;
 %参考：https://ww2.mathworks.cn/help/deeplearning/examples/sequence-to-sequence-classification-using-deep-learning.html
 
@@ -27,7 +28,7 @@ numClasses = 4;
 
 layers = [ ...
     sequenceInputLayer(numFeatures)
-     bilstmLayer(numHiddenUnits,'OutputMode','sequence')
+     lstmLayer(numHiddenUnits,'OutputMode','sequence')
     fullyConnectedLayer(numClasses)
     softmaxLayer
     classificationLayer];
@@ -53,9 +54,7 @@ layers = [ ...
 %     'LearnRateDropPeriod',5, ...
 %     'Verbose',0, ...
 %     'Plots','training-progress',...
-%     'MiniBatchSize',64, ...
-%     'ValidationData',{XValidation1,YValidation1}, ...
-%     'ValidationFrequency',5,'ExecutionEnvironment','cpu','MaxEpochs',300)
+%     'ExecutionEnvironment','cpu','MaxEpochs',300);
 
 % options = trainingOptions('adam', ...
 %     'MaxEpochs',200, ...
@@ -75,10 +74,11 @@ layers = [ ...
 %     'Plots','training-progress');%good
 
 options = trainingOptions('adam', ...
-    'MaxEpochs',600, ...
+    'MaxEpochs',200, ...
+    'MiniBatchSize',8, ...
     'GradientThreshold',0.2, ...
     'ValidationData',{XValidation1,YValidation1}, ...
-    'ValidationFrequency',5,'ExecutionEnvironment','cpu',...
+    'ValidationFrequency',50,'ExecutionEnvironment','cpu',...
     'Verbose',0, ...
     'Plots','training-progress');%good
 
@@ -103,6 +103,8 @@ XTrainT={};
 YTrainT ={};
 counter = 0;
 name{1} = '.\LCSamples\oneLC4Type*.csv';
+%%
+%%加入分析
 
 for k=1:1
     nameT = name{k};
@@ -145,6 +147,7 @@ for k=1:1
          
          YTrainT{counter,1} = categorical(labelT');
          XTrainT{counter,1} = [localX1 Xvel1 vehicleAcc headWay ]';  
+        
     end
 end
 YTrain = YTrainT;

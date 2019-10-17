@@ -6,6 +6,9 @@ function findOneLCAndShow8(name)
 T = dir(name);
 allData =[];
 counter =0;
+headwayList =[];%用于分析
+vehicleVelList =[];%用于分析
+spaceDisList =[]
     for i=1:length(T)
     
         str=[T(i).folder '\' T(i).name];
@@ -43,6 +46,14 @@ counter =0;
                 [mylcInd1,mylcInd2] = laneChangeStartPoint(dat);%粗略找到变道开始和结束点
                if(mylcInd1==0 )
                    continue;
+               end
+               
+               if(headWay(indT)<0.1)
+                    continue;
+               end
+               
+                if(headWay(indT)<0.1)
+                    continue;
                end
                
                %%%变道开始时，车道转换和车道保持之间的过渡带
@@ -136,9 +147,14 @@ counter =0;
 
                 dat1 = [dat mylcFlag];
                 tmp = dat1(indTT1:indTT2,:);
+                
                 csvwrite(str2,tmp); 
                 allData = [allData;dat1];
-                
+                headwayList(counter,:)=[headWay(indT) headWay(indT-1) headWay(indT-2)];
+                spaceDisList(counter,:)=[spaceDis(indT) spaceDis(indT-1) spaceDis(indT-2)];
+                vehicleVelList(counter,:)=[vehicleVel(indT) vehicleVel(indT-1) vehicleVel(indT-2)];
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                if 0
                 close all
                 figure(101)
                 subplot(3,1,1)
@@ -155,11 +171,11 @@ counter =0;
                   subplot(3,1,3)
                    plot(frameId(mylcInd1:mylcInd2),headWay(mylcInd1:mylcInd2),'b.-');
                 
-                
+                end
                 
 %                 analyzingByHuman1(dat,mylk2lcInd,mylcInd1,mylcInd2,mylc2lkInd)
                 
-%                pause(5);
+%                 pause(5);
             else
                    disp('变道时间不够')
             end
@@ -169,7 +185,27 @@ counter =0;
         end
     end
     str2 ='.\\LCSamples\\OneLC4TypeAllData.csv';
-    csvwrite(str2,allData); 
+    csvwrite(str2,allData);
+    
+    figure,
+    subplot(3,1,1)
+    plot(headwayList(:,1))
+
+    subplot(3,1,2)
+    plot(headwayList(:,2))
+
+    subplot(3,1,3)
+    plot(headwayList(:,2))
+
+    figure,
+    subplot(3,1,1)
+    hist(headwayList(:,1),100);
+
+    subplot(3,1,2)
+    hist(spaceDisList(:,1),100);
+
+    subplot(3,1,3)
+    hist(vehicleVelList(:,1),100);
 end
 
 %% 根据90%置信度的点，找出车道转换开始和结束点

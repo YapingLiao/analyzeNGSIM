@@ -19,10 +19,14 @@ D.±äµÀÂ·¾¶ÆğÊ¼µãºÍ½áÊøµãµÄ´ÖÂÔÎªÆ½¾ùÊı¼ÓÒ»µãµã·½²î£¬¾ßÌå¼ûfindOneLCAndShow1ÖĞµÄ´
 11.findOneLCAndShow5,trainLSTM5, ÔÚfindOneLCAndShow4,trainLSTM4, µÄ»ù´¡ÉÏ£¬×ª»»ÎªSeq2oneµÄLSTMÄ£ĞÍ¡£  
 12 findOneLCAndShow6,trainLSTM6, Ö»ÕÒ±äµÀÒ»´ÎµÄ£¬¶øÇÒ±äµÀºó³ÖĞø4ÃëÒÔÉÏ£¬¶øÇÒ±äµÀÇ°ÓĞ¹ı¶É´øÀàĞÍ£¬3Àà£¬²¢ÇÒÔö¼ÓÓëÇ°³µHEADWAY;ÓÃÁíÍâÒ»¸öÄ£ĞÍ£¬SEQ->ONE  
 13 findOneLCAndShow67,trainLSTM7, Ö»ÕÒ±äµÀÒ»´ÎµÄ£¬¶øÇÒ±äµÀºó³ÖĞø4ÃëÒÔÉÏ£¬¶øÇÒ±äµÀÇ°ÓĞ¹ı¶É´øÀàĞÍ£¬4Àà£¬²¢ÇÒÔö¼ÓÓëÇ°³µHEADWAY;ÓÃÁíÍâÒ»¸öÄ£ĞÍ£¬SEQ->SEQ
-¼°µÚ4ÀàÎªÒì³£Àà£¬ÀıÈçHEADWAYÌø±äµã£¬¶ø²»ÊÇlc2lkµÄ±ä»»µã¡£
+¼°µÚ4ÀàÎªÒì³£Àà£¬ÀıÈçHEADWAYÌø±äµã£¬¶ø²»ÊÇlc2lkµÄ±ä»»µã¡£  
+14 findOneLCAndShow8,¸ù¾İheadwayÉ¾³ıÒ»Ğ©²»ºÃµÄÊı¾İ   
+15 trainLSTM8, SEQ->SEQ£¬4Àà¼°µÚ4ÀàÎªÒì³£Àà£¬ÀıÈçHEADWAYÌø±äµã£¬¶ø²»ÊÇlc2lkµÄ±ä»»µã  £¬Ê¹ÓÃĞ¡µÄ'MiniBatchSiz  
+
 
 ×¢Òâ
 1.×¢ÒâtrainLSTM7,validList = num2(num1+1:num1+2),ºÜĞ¡£¬ÒòÎª»á³öÏÖÊı×éÌ«´óµÄ´íÎó  
+2.×¢Òâµ±³öÏÖÊı×éºÜ´óÊÇËõĞ¡MiniBatchSize',£¨'MiniBatchSize',8£©ÀàËÆÔÚtrainLSTM8
 #############################################################################  
 ÓïÒå·Ö¸î
 1.ÈëÃÅ¿´https://blog.csdn.net/qian2213762498/article/details/82788273  
