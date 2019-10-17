@@ -3,7 +3,7 @@
 function  trainLSTM6()
 
 [XTrain,YTrain]=prepareData();
-num1 = floor(length(XTrain)/10*3);
+num1 = floor(length(XTrain)/10*5);
 num2 = randperm(length(XTrain));
 trainList = num2(1:num1);
 validList = num2(num1+1:end);
@@ -25,20 +25,20 @@ layers = [ ...
     softmaxLayer
     classificationLayer]
 
-% numHiddenUnits2 = 200;
-% numHiddenUnits3 = 50;
-% numHiddenUnits4 = 25;
-% layers = [ ...
-%     sequenceInputLayer(numFeatures)
-%     lstmLayer(numHiddenUnits2,'OutputMode','sequence')
-%     dropoutLayer(0.2)
-%     lstmLayer(numHiddenUnits3,'OutputMode','sequence')
-%     dropoutLayer(0.2)
-%     lstmLayer(numHiddenUnits4,'OutputMode','sequence')
-%     dropoutLayer(0.2)
-%     fullyConnectedLayer(numClasses)
-%     softmaxLayer
-%     classificationLayer];
+numHiddenUnits2 = 200;
+numHiddenUnits3 = 50;
+numHiddenUnits4 = 25;
+layers = [ ...
+    sequenceInputLayer(numFeatures)
+    lstmLayer(numHiddenUnits2,'OutputMode','last')
+    dropoutLayer(0.2)
+    lstmLayer(numHiddenUnits3,'OutputMode','last')
+    dropoutLayer(0.2)
+    lstmLayer(numHiddenUnits4,'OutputMode','last')
+    dropoutLayer(0.2)
+    fullyConnectedLayer(numClasses)
+    softmaxLayer
+    classificationLayer];
 
 % options = trainingOptions('sgdm', ...
 %     'LearnRateSchedule','piecewise', ...
@@ -55,7 +55,6 @@ options = trainingOptions('adam', ...
     'GradientThreshold',0.05, ...
     'Verbose',0, ...
     'Plots','training-progress',...
-    'MiniBatchSize',64, ...
     'ValidationData',{XValidation1,YValidation1}, ...
     'ValidationFrequency',5,'ExecutionEnvironment','gpu',...
     'CheckpointPath','.\CkPts',...
