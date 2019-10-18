@@ -6,3 +6,4 @@
 *.mat
 *.log
 */matConvNetSamples/matconvnet-1.0-beta25
+matConvNetSamples/pax_global_header
