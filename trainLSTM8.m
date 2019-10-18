@@ -13,8 +13,8 @@ YTrain1 = YTrain(trainList);
 XValidation1= XTrain(validList);
 YValidation1 = YTrain(validList);
 numFeatures = 4;
-numHiddenUnits = 50;
-numClasses = 4;
+numHiddenUnits = 200;
+numClasses = 3;
 %参考：https://ww2.mathworks.cn/help/deeplearning/examples/sequence-to-sequence-classification-using-deep-learning.html
 
 % layers = [ ...
@@ -28,7 +28,7 @@ numClasses = 4;
 
 layers = [ ...
     sequenceInputLayer(numFeatures)
-     lstmLayer(numHiddenUnits,'OutputMode','sequence')
+     bilstmLayer(numHiddenUnits,'OutputMode','sequence')
     fullyConnectedLayer(numClasses)
     softmaxLayer
     classificationLayer];
@@ -74,9 +74,9 @@ layers = [ ...
 %     'Plots','training-progress');%good
 
 options = trainingOptions('adam', ...
-    'MaxEpochs',200, ...
-    'MiniBatchSize',8, ...
-    'GradientThreshold',0.2, ...
+    'MaxEpochs',300, ...
+    'MiniBatchSize',1, ...
+    'GradientThreshold',0.05, ...
     'ValidationData',{XValidation1,YValidation1}, ...
     'ValidationFrequency',50,'ExecutionEnvironment','cpu',...
     'Verbose',0, ...
@@ -92,7 +92,7 @@ options = trainingOptions('adam', ...
 %     'Verbose',0, ...
 %     'Plots','training-progress');
 net = trainNetwork(XTrain1,YTrain1,layers,options);
-save ngsimOneLC4Type.mat;
+save ngsimOneLC3Type.mat;
 % showRvl();
 end
 
@@ -102,7 +102,7 @@ function [XTrain,YTrain]=prepareData()
 XTrainT={};
 YTrainT ={};
 counter = 0;
-name{1} = '.\LCSamples\oneLC4Type*.csv';
+name{1} = '.\LCSamples\oneLC3Type*.csv';
 %%
 %%加入分析
 

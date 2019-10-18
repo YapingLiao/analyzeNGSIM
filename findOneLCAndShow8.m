@@ -134,7 +134,7 @@ spaceDisList =[]
                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
                %%%生成数据，添加标记
                 counter = counter+1;
-                str2 = sprintf('.\\LCSamples\\OneLC4Type%d.csv',counter);
+                str2 = sprintf('.\\LCSamples\\OneLC3Type%d.csv',counter);
                 mylcFlag = zeros(numel(laneID),1);
                 mylcFlag(mylcInd1:mylcInd2)=1;
                  mylcFlag(mylk2lcInd:mylcInd1)=2;
@@ -142,7 +142,7 @@ spaceDisList =[]
                  
              
              
-                mylcFlag(indT+1) =3;%车道变换时HEAWAY出现跳变，出现异常，归类为3
+%                 mylcFlag(indT+1) =3;%车道变换时HEAWAY出现跳变，出现异常，归类为3
              
 
                 dat1 = [dat mylcFlag];
@@ -184,7 +184,7 @@ spaceDisList =[]
             disp(str)
         end
     end
-    str2 ='.\\LCSamples\\OneLC4TypeAllData.csv';
+    str2 ='.\\LCSamples\\OneLC3TypeAllData.csv';
     csvwrite(str2,allData);
     
     figure,

@@ -70,7 +70,7 @@ end
 if 1
  name = '.\\LCSamples\\LC*.csv';
  findOneLCAndShow8(name);%只找变道一次的，而且变道后持续4秒以上，而且变道前有过渡带类型，并且增加与前车距离,用另外一个模型，SEQ->ONE
-%  trainLSTM8();%只训练变道1次的
+  trainLSTM8();%只训练变道1次的
 end
 end
 
