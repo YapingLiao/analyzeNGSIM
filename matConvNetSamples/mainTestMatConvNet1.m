@@ -2,12 +2,12 @@
 function mainTestMatConvNet1
 
 %只运行一次
-if 1
+if 0
 untar('http://www.vlfeat.org/matconvnet/download/matconvnet-1.0-beta25.tar.gz') ;
 cd matconvnet-1.0-beta25
 
 %如果找不到cl.exe ，根据
-%https://stackoverflow.com/questions/40226354/matconvnet-error-cl-exe-not-found，设定
+%https://stackoverflow.com/questions/40226354/matconvnet-error-cl-exe-not-found，设定，并注销重登陆
 %
 %mex --setup 
 run matlab/vl_compilenn ;
@@ -17,49 +17,61 @@ urlwrite(...
 urlwrite(...
   'http://www.vlfeat.org/matconvnet/models/imagenet-googlenet-dag.mat', ...
   'imagenet-googlenet-dag.mat') ;
+
+urlwrite(...
+  ' http://www.vlfeat.org/matconvnet/models/pascal-fcn8s-tvg-dag.mat',...
+  'pascal-fcn8s-tvg-dag.mat' ) ;
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-cd matconvnet-1.0-beta25
-net = load('imagenet-vgg-f.mat') ;
-net = vl_simplenn_tidy(net) ;
 
-% Obtain and preprocess an image.
-im = imread('peppers.png') ;
-im_T = single(im) ; % note: 255 range
-im_T = imresize(im_T, net.meta.normalization.imageSize(1:2)) ;
-im_T = im_T - net.meta.normalization.averageImage ;
+if 0
+    cd matconvnet-1.0-beta25
+    net = load('imagenet-vgg-f.mat') ;
+    net = vl_simplenn_tidy(net) ;
 
-% Run the CNN.
-res = vl_simplenn(net, im_T) ;
+    % Obtain and preprocess an image.
+    im = imread('peppers.png') ;
+    im_T = single(im) ; % note: 255 range
+    im_T = imresize(im_T, net.meta.normalization.imageSize(1:2)) ;
+    im_T = im_T - net.meta.normalization.averageImage ;
 
-% Show the classification result.
-scores = squeeze(gather(res(end).x)) ;
-[bestScore, best] = max(scores) ;
-figure(1) ; clf ; imagesc(im) ;
-title(sprintf('%s (%d), score %.3f',...
-   net.meta.classes.description{best}, best, bestScore)) ;
+    % Run the CNN.
+    res = vl_simplenn(net, im_T) ;
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%
-net = dagnn.DagNN.loadobj(load('imagenet-googlenet-dag.mat')) ;
-net.mode = 'test' ;
+    % Show the classification result.
+    scores = squeeze(gather(res(end).x)) ;
+    [bestScore, best] = max(scores) ;
+    figure(1) ; clf ; imagesc(im) ;
+    title(sprintf('%s (%d), score %.3f',...
+       net.meta.classes.description{best}, best, bestScore)) ;
 
-% load and preprocess an image
-im = imread('peppers.png') ;
-im_ = single(im) ; % note: 0-255 range
-im_ = imresize(im_, net.meta.normalization.imageSize(1:2)) ;
-im_ = bsxfun(@minus, im_, net.meta.normalization.averageImage) ;
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%
+    net = dagnn.DagNN.loadobj(load('imagenet-googlenet-dag.mat')) ;
+    net.mode = 'test' ;
 
-% run the CNN
-net.eval({'data', im_}) ;
+    % load and preprocess an image
+    im = imread('peppers.png') ;
+    im_ = single(im) ; % note: 0-255 range
+    im_ = imresize(im_, net.meta.normalization.imageSize(1:2)) ;
+    im_ = bsxfun(@minus, im_, net.meta.normalization.averageImage) ;
 
-% obtain the CNN otuput
-scores = net.vars(net.getVarIndex('prob')).value ;
-scores = squeeze(gather(scores)) ;
+    % run the CNN
+    net.eval({'data', im_}) ;
 
-% show the classification results
-[bestScore, best] = max(scores) ;
-figure(1) ; clf ; imagesc(im) ;
-title(sprintf('%s (%d), score %.3f',...
-net.meta.classes.description{best}, best, bestScore)) ;
+    % obtain the CNN otuput
+    scores = net.vars(net.getVarIndex('prob')).value ;
+    scores = squeeze(gather(scores)) ;
+
+    % show the classification results
+    [bestScore, best] = max(scores) ;
+    figure(1) ; clf ; imagesc(im) ;
+    title(sprintf('%s (%d), score %.3f',...
+    net.meta.classes.description{best}, best, bestScore)) ;
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%进一步语法分割例子见testMonocularCameraandSemanticSegmentation2.m和REDME
+
+cd ..\
 end

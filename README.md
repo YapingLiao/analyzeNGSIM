@@ -40,4 +40,12 @@ MATCONVNET
 https://www.cnblogs.com/xiaotongtt/p/8322198.html  
 https://blog.csdn.net/anysky___/article/details/51356158
 
+2.FCN 分割图像程序  
+https://github.com/DUTFangXiang/ExtractFCNFeature  
+https://github.com/onnx/models#object_detection  
+https://github.com/tensorflow/models/tree/master/research/deeplab  
+3 安装各种例子（除了MATLAB） （https://github.com/search?l=MATLAB&p=1&q=semantic+segmentation&type=Repositories） 、
+https://github.com/nightrome/matconvnet-calvin  
+https://github.com/HyeonwooNoh/DeconvNet   
+
 
