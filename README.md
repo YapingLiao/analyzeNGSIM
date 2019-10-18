@@ -21,7 +21,9 @@ D.±äµÀÂ·¾¶ÆðÊ¼µãºÍ½áÊøµãµÄ´ÖÂÔÎªÆ½¾ùÊý¼ÓÒ»µãµã·½²î£¬¾ßÌå¼ûfindOneLCAndShow1ÖÐµÄ´
 13 findOneLCAndShow67,trainLSTM7, Ö»ÕÒ±äµÀÒ»´ÎµÄ£¬¶øÇÒ±äµÀºó³ÖÐø4ÃëÒÔÉÏ£¬¶øÇÒ±äµÀÇ°ÓÐ¹ý¶É´øÀàÐÍ£¬4Àà£¬²¢ÇÒÔö¼ÓÓëÇ°³µHEADWAY;ÓÃÁíÍâÒ»¸öÄ£ÐÍ£¬SEQ->SEQ
 ¼°µÚ4ÀàÎªÒì³£Àà£¬ÀýÈçHEADWAYÌø±äµã£¬¶ø²»ÊÇlc2lkµÄ±ä»»µã¡£  
 14 findOneLCAndShow8,¸ù¾ÝheadwayÉ¾³ýÒ»Ð©²»ºÃµÄÊý¾Ý   
-15 trainLSTM8, SEQ->SEQ£¬4Àà¼°µÚ4ÀàÎªÒì³£Àà£¬ÀýÈçHEADWAYÌø±äµã£¬¶ø²»ÊÇlc2lkµÄ±ä»»µã  £¬Ê¹ÓÃÐ¡µÄ'MiniBatchSiz  
+15 trainLSTM8, SEQ->SEQ£¬¸ÄÎª3ÀàÊ¹ÓÃÐ¡µÄ'MiniBatchSiz£¬¶øÇÒÑµÁ·Êý¾Ý¸ÄÎªµ¥¾«¶È    
+16 findOneLCAndShow8, ½øÒ»²½½«lc2lkµÄãÐÖµ¸ÄÎªmean1¼Ó¼õ0.5*std1; 
+
 
 
 ×¢Òâ

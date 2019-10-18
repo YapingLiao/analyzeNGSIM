@@ -4,7 +4,7 @@ function showRvl()
 clear all;
 close all
 % load ngsimOneLC3Type.mat;
-load ngsimOneLC4Type.mat;
+load ngsimOneLC3Type.mat;
 
 
 XTest = XTrain1{1};

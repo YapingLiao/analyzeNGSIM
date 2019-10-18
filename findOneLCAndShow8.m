@@ -249,7 +249,7 @@ function [mylcInd1,mylcInd2] = laneChangeStartPoint(dat)
             tmp1 = indT:min(indT+120,numel(localX));
             mean1= mean(localX( tmp1));
             std1 = std(localX( tmp1));
-            tr90 = mean1-0.1*std1;  
+            tr90 = mean1-0.5*std1;  
             tmp2 = find(localX(tmp1)>tr90);
             mylcInd2 = min(tmp1(tmp2(1)),indT+50);%车道转换后最多5秒结束
             
@@ -270,7 +270,7 @@ function [mylcInd1,mylcInd2] = laneChangeStartPoint(dat)
             tmp1 = indT:min(indT+120,numel(localX));
             mean1= mean(localX( tmp1));
             std1 = std(localX( tmp1));
-            tr90 = mean1+0.1*std1;  
+            tr90 = mean1+0.5*std1;  
             tmp2 = find(localX(tmp1)<tr90);
             
            

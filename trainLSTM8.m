@@ -33,20 +33,20 @@ layers = [ ...
     softmaxLayer
     classificationLayer];
 % 
-% numHiddenUnits2 = 200;
-% numHiddenUnits3 = 50;
-% numHiddenUnits4 = 25;
-% layers = [ ...
-%     sequenceInputLayer(numFeatures)
-%     lstmLayer(numHiddenUnits2,'OutputMode','sequence')
-%     dropoutLayer(0.2)
-%     lstmLayer(numHiddenUnits3,'OutputMode','sequence')
-%     dropoutLayer(0.2)
-%     lstmLayer(numHiddenUnits4,'OutputMode','sequence')
-%     dropoutLayer(0.2)
-%     fullyConnectedLayer(numClasses)
-%     softmaxLayer
-%     classificationLayer];
+numHiddenUnits2 = 200;
+numHiddenUnits3 = 50;
+numHiddenUnits4 = 25;
+layers = [ ...
+    sequenceInputLayer(numFeatures)
+    lstmLayer(numHiddenUnits2,'OutputMode','sequence')
+    dropoutLayer(0.2)
+    lstmLayer(numHiddenUnits3,'OutputMode','sequence')
+    dropoutLayer(0.2)
+    lstmLayer(numHiddenUnits4,'OutputMode','sequence')
+    dropoutLayer(0.2)
+    fullyConnectedLayer(numClasses)
+    softmaxLayer
+    classificationLayer];
 
 % options = trainingOptions('sgdm', ...
 %     'LearnRateSchedule','piecewise', ...
@@ -75,10 +75,11 @@ layers = [ ...
 
 options = trainingOptions('adam', ...
     'MaxEpochs',300, ...
-    'MiniBatchSize',1, ...
+    'MiniBatchSize',2, ...
     'GradientThreshold',0.05, ...
     'ValidationData',{XValidation1,YValidation1}, ...
     'ValidationFrequency',50,'ExecutionEnvironment','cpu',...
+    'CheckpointPath','.\CkPts',...
     'Verbose',0, ...
     'Plots','training-progress');%good
 
@@ -93,7 +94,7 @@ options = trainingOptions('adam', ...
 %     'Plots','training-progress');
 net = trainNetwork(XTrain1,YTrain1,layers,options);
 save ngsimOneLC3Type.mat;
-% showRvl();
+ showRvl();
 end
 
 %%
@@ -146,7 +147,7 @@ for k=1:1
          labelT(ind,:)='abnorm';
          
          YTrainT{counter,1} = categorical(labelT');
-         XTrainT{counter,1} = [localX1 Xvel1 vehicleAcc headWay ]';  
+         XTrainT{counter,1} = single([localX1 Xvel1 vehicleAcc headWay ]');  
         
     end
 end

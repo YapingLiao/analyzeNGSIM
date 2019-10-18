@@ -2,7 +2,7 @@
 function mainTestMatConvNet1
 
 %只运行一次
-if 0
+if 1
 untar('http://www.vlfeat.org/matconvnet/download/matconvnet-1.0-beta25.tar.gz') ;
 cd matconvnet-1.0-beta25
 
